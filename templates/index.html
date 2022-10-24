@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Lista de Tarefas</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Lista de Tarefas</h1>
+
+    {% if tarefas|length < 1 %}
+
+        <h4>Não tem tarefas no momento. Cadastre uma nova!</h4>
+    {% else %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Tarefa</th>
+                    <th>Adicionada</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tarefa in tarefas %}
+                    <tr>
+                        <td>{{ tarefa.content }}</td>
+                        <td>{{ tarefa.data_created.date() }}</td>
+                        <td>
+                            <a href="/delete/{{ tarefa.id }}">Deletar</a><br>
+                            <a href="/update/{{ tarefa.id }}">Atualizar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    
+    <form action="/" method="POST">
+        <input type="text" id="content" name="content">
+        <input type="submit" value="Adicionar">
+    </form>
+</div>
+
+{% endblock %}
+
